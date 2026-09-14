@@ -1,66 +1,126 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Mini Inventory & Purchase Order System (Laravel + Node.js)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A web-based **Inventory and Purchase Order Management System** built for restaurants, retail, or distribution businesses to track products, suppliers, purchase orders, partial goods receiving, and complete stock movement audit logs.
 
-## About Laravel
+Designed with a modern SaaS user interface inspired by **Mekari Jurnal** using a custom palette (`#E3FDFD`, `#CBF1F5`, `#A6E3E9`, `#71C9CE`), integrated with **Node.js services and CLI tools**.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠 Technology Stack
+* **Backend Framework:** Laravel 11 (PHP 8.2+)
+* **Node.js Stack:** Node.js (v18+), ES Modules, `mysql2`, HTTP Microservices, Node CLI
+* **Database:** MySQL / MariaDB (Database: `senja_inventory`)
+* **Frontend:** Blade Templates, Bootstrap 5, Bootstrap Icons, Google Fonts (Plus Jakarta Sans), Vite Pipeline
+* **Architecture:** MVC with Eloquent ORM + Node.js Analytics Microservices
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🟢 Node.js Features & Tools Included
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Node.js Inventory API Microservice
+Start the Node.js REST API service listening on port 3000:
+```bash
+npm run node-api
+```
+Available REST endpoints:
+* `GET http://localhost:3000/api/node/status`: Real-time system health and total metrics summary.
+* `GET http://localhost:3000/api/node/low-stock`: Returns JSON list of all items below minimum stock.
+* `GET http://localhost:3000/api/node/inventory-summary`: Returns total inventory valuation and catalog items.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2. Node.js Terminal CLI Tool
+Execute terminal inventory inspections via Node.js:
+```bash
+npm run node-cli
+```
+Outputs formatted ASCII tables of product stock, low-stock warnings, and warehouse alerts directly in your terminal.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 🚀 Installation & Setup Guide
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1. Requirements
+* PHP >= 8.2 with PDO extension
+* Node.js >= 18.0 & NPM
+* Composer
+* MySQL Database
 
-### Premium Partners
+### 2. Steps to Run Locally
+1. Clone the repository:
+   ```bash
+   git clone <repository_url>
+   cd "Project AG"
+   ```
+2. Install PHP & Node.js dependencies:
+   ```bash
+   composer install
+   npm install
+   ```
+3. Setup Environment File:
+   ```bash
+   cp .env.example .env
+   ```
+4. Configure Database connection in `.env`:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=senja_inventory
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+5. Create database, run migrations & seed test data:
+   ```bash
+   mysql -u root -e "CREATE DATABASE IF NOT EXISTS senja_inventory;"
+   php artisan migrate:fresh --seed
+   ```
+6. Start local servers:
+   - **Laravel Web App:** `php artisan serve` (http://127.0.0.1:8000)
+   - **Node.js Service:** `npm run node-api` (http://localhost:3000)
+   - **Node.js CLI Inspector:** `npm run node-cli`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## 🏗 Architecture & Main Workflow
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+The application strictly enforces the core business flow:
 
-## Code of Conduct
+$$\text{Product} \longrightarrow \text{Supplier} \longrightarrow \text{Purchase Order (Ordered)} \longrightarrow \text{Goods Receiving} \longrightarrow \text{Inventory Updated}$$
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 📊 Database Schema & Data Structure
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* **`suppliers`**: `id`, `name`, `contact_person`, `phone`, `email`, `address`, `timestamps`
+* **`products`**: `id`, `name`, `sku` (unique), `category`, `unit`, `current_stock`, `minimum_stock`, `purchase_price`, `supplier_id` (foreign key), `timestamps`
+* **`purchase_orders`**: `id`, `po_number` (unique), `supplier_id` (foreign key), `order_date`, `status` (`Draft`, `Ordered`, `Partially Received`, `Received`, `Cancelled`), `total_amount`, `timestamps`
+* **`purchase_order_items`**: `id`, `purchase_order_id` (foreign key), `product_id` (foreign key), `quantity_ordered`, `quantity_received`, `purchase_price`, `line_total`, `timestamps`
+* **`inventory_histories`**: `id`, `product_id` (foreign key), `quantity_change`, `reason`, `timestamps`
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🤖 AI Tools Usage
+
+* **AI Tools Used:** Google Antigravity / Gemini / ChatGPT.
+* **How AI Was Used:**
+  - Generating model, controller, Node.js API, and migration structures.
+  - Designing UI Blade views based on Mekari Jurnal styling and custom color palettes (`#E3FDFD`, `#CBF1F5`, `#A6E3E9`, `#71C9CE`).
+  - Building Node.js CLI inspection utilities and Node.js microservices.
+
+---
+
+## 🔍 Problem & Solution Log
+
+### Problem 1: Premature Stock Increase on Purchase Order Creation
+* **What Happened:** Creating a Purchase Order originally incremented product stock levels in the database.
+* **Why It Happened:** Stock update logic was initially placed inside `PurchaseOrderController@store`.
+* **How It Was Solved:** Removed stock increment code from PO creation. Restructured the architecture so stock increases occur strictly inside `PurchaseOrderController@receive` within a database transaction.
+
+### Problem 2: Over-receiving Goods Beyond Ordered Quantity
+* **What Happened:** Users could accidentally enter a receiving quantity greater than the remaining ordered amount.
+* **Why It Happened:** Absence of backend validation checking incoming receive quantities against `(quantity_ordered - quantity_received)`.
+* **How It Was Solved:** Implemented custom validation in `PurchaseOrderController@receive` that throws a `ValidationException` if `receive_qty > remaining_qty` for any line item.
+
+### Problem 3: Stock Adjustments Without Audit Trail & Negative Stock Vulnerability
+* **What Happened:** Manual stock adjustments directly updated `current_stock` without recording reasons.
+* **Why It Happened:** Stock edits were executed as raw model updates without historical logging or validation bounds.
+* **How It Was Solved:** Enclosed manual adjustments in a database transaction (`DB::transaction`) that validates `current_stock >= decrease_amount` and automatically inserts a record into `inventory_histories`.
